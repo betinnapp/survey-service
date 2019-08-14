@@ -2,7 +2,7 @@
 
 ## Concerns
 
-* Manage surveys (Create, Update, Delete);
+* Manage surveys (Create, Read, Update, Delete);
 * Store survey answers;
 
 ## Depends On
