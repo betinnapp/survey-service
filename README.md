@@ -1,5 +1,7 @@
 # Survey Service
 
+It's responsible for managing a set of questions with their answers.
+
 ## Concerns
 
 * Manage surveys (Create, Read, Update, Delete);
