@@ -14,8 +14,5 @@ It's responsible for managing a set of questions with their answers.
 
 * [User Service](https://github.com/betinnapp/user-service)
 
-# Wiki
+## API Docs
 [Click here](https://github.com/betinnapp/survey-service/wiki)
-
-## API
-* TODO: Add swagger link
