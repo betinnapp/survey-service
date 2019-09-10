@@ -1,0 +1,10 @@
+CREATE USER "survey-service-app" WITH password 'survey-service-app';
+
+ALTER DEFAULT PRIVILEGES REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;
+
+GRANT USAGE ON SCHEMA public TO "survey-service-app";
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, UPDATE, INSERT, DELETE ON TABLES TO "survey-service-app";
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE ON SEQUENCES TO "survey-service-app";
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+GRANT EXECUTE ON FUNCTION uuid_generate_v4() to "survey-service-app";
