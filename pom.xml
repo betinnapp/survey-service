@@ -22,8 +22,7 @@
 	<properties>
 		<java.version>11</java.version>
 		
-		<jackson.databind.version>2.9.9.2</jackson.databind.version>
-		<dockerfile.maven.version>1.4.12</dockerfile.maven.version>
+		<jackson.databind.version>2.9.10</jackson.databind.version>
 	</properties>
 
 	<dependencies>
