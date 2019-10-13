@@ -15,7 +15,6 @@ public class QuestionCreate {
     @NotNull
     private QuestionType type;
 
-    @NotNull
     private UUID correctOptionId;
 
     public String getText() {

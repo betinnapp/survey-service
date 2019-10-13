@@ -14,23 +14,20 @@ import java.util.UUID;
 @Service
 public class SurveyService extends AbstractCrudService<Survey> {
 
-    private final SurveyDAO surveyDAO;
     private final QuestionService questionService;
 
     public SurveyService(SurveyDAO surveyDAO, QuestionService questionService) {
         super(Survey.class, surveyDAO);
 
-        this.surveyDAO = surveyDAO;
         this.questionService = questionService;
     }
 
-    @Transactional
     public Survey create(SurveyCreate surveyCreate) {
         Survey survey = new Survey();
         survey.setName(surveyCreate.getName());
         survey.setDescription(surveyCreate.getDescription());
 
-        return surveyDAO.save(survey);
+        return super.create(survey);
     }
 
     @Transactional
