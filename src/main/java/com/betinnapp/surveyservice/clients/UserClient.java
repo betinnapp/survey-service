@@ -5,9 +5,9 @@ import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
 
-public interface UserServiceClient {
+public interface UserClient {
 
-    @RequestLine("GET /me")
-    @Headers("authorization: Bearer {token}")
+    @RequestLine("GET /user/me")
+    @Headers("authorization: {token}")
     User getUserInfo(@Param("token") String token);
 }

@@ -1,6 +1,6 @@
 package com.betinnapp.surveyservice.configuration;
 
-import com.betinnapp.surveyservice.clients.UserServiceClient;
+import com.betinnapp.surveyservice.clients.UserClient;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.okhttp.OkHttpClient;
@@ -20,7 +20,7 @@ public class ClientConfiguration {
     }
 
     @Bean
-    public UserServiceClient userServiceClient(@Value("services.user.url") String userServiceUrl) {
+    public UserClient userServiceClient(@Value("${services.user.url}") String userServiceUrl) {
         CircuitBreaker circuitBreaker = CircuitBreaker
                 .ofDefaults("userService");
 
@@ -33,6 +33,6 @@ public class ClientConfiguration {
                 .builder(decorators)
                 .encoder(new JacksonEncoder())
                 .decoder(new JacksonDecoder())
-                .target(UserServiceClient.class, userServiceUrl);
+                .target(UserClient.class, userServiceUrl);
     }
 }

@@ -4,6 +4,7 @@ import com.betinnapp.surveyservice.dao.QuestionAnswerDAO;
 import com.betinnapp.surveyservice.model.domain.QuestionAnswer;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,7 +27,9 @@ public class QuestionAnswerService extends AbstractCrudService<QuestionAnswer> {
         return super.create(questionAnswer);
     }
 
-    public UUID getAnsweredOption(UUID userId, UUID questionId) {
-        return questionAnswerDAO.findOptionIdByUserIdAndQuestionId(userId, questionId);
+    public Optional<UUID> getAnsweredOption(UUID userId, UUID questionId) {
+        return questionAnswerDAO
+                .findByUserIdAndQuestionId(userId, questionId)
+                .map(QuestionAnswer::getOptionId);
     }
 }

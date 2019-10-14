@@ -30,16 +30,16 @@ public class QuestionsController {
     }
 
     @PutMapping
-    public Question edit(@RequestBody Question question) {
-        return questionService.edit(question);
+    public Question edit(@RequestHeader("authorization") String authorization, @RequestBody Question question) {
+        return questionService.edit(authorization, question);
     }
 
     @PostMapping("/{id}:answer")
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public void answerSurveyQuestion(@RequestHeader("authorization") String authorization,
-                                     @PathVariable UUID questionId,
+                                     @PathVariable UUID id,
                                      @RequestBody SurveyQuestionAnswer surveyQuestionAnswer) {
 
-        questionService.answerQuestion(authorization, questionId, surveyQuestionAnswer);
+        questionService.answerQuestion(authorization, id, surveyQuestionAnswer);
     }
 }

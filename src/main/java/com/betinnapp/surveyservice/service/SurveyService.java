@@ -8,8 +8,11 @@ import com.betinnapp.surveyservice.model.survey.SurveyCreate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class SurveyService extends AbstractCrudService<Survey> {
@@ -37,6 +40,22 @@ public class SurveyService extends AbstractCrudService<Survey> {
 
         Set<Question> questions = survey.getQuestions();
         questions.add(question);
+
+        return survey;
+    }
+
+    public Survey getById(UUID id, String authorizationToken) {
+        Survey survey = super.getById(id);
+
+        Set<Question> questions = survey
+                .getQuestions()
+                .stream()
+                .map(Question::getId)
+                .map(questionId -> questionService.getById(questionId, authorizationToken))
+                .collect(Collectors.toUnmodifiableSet());
+
+        survey
+                .setQuestions(questions);
 
         return survey;
     }

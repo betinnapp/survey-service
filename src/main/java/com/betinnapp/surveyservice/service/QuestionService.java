@@ -1,6 +1,5 @@
 package com.betinnapp.surveyservice.service;
 
-import com.betinnapp.surveyservice.clients.UserServiceClient;
 import com.betinnapp.surveyservice.dao.QuestionDAO;
 import com.betinnapp.surveyservice.exception.EntityNotProcessedException;
 import com.betinnapp.surveyservice.model.domain.Question;
@@ -11,22 +10,20 @@ import com.betinnapp.surveyservice.model.user.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class QuestionService extends AbstractCrudService<Question> {
 
-    private final UserServiceClient userServiceClient;
+    private final UserService userService;
     private final QuestionAnswerService questionAnswerService;
 
-    public QuestionService(QuestionDAO questionDAO,
-                           QuestionAnswerService questionAnswerService,
-                           UserServiceClient userServiceClient) {
-
+    public QuestionService(QuestionDAO questionDAO, QuestionAnswerService questionAnswerService, UserService userService) {
         super(Question.class, questionDAO);
 
         this.questionAnswerService = questionAnswerService;
-        this.userServiceClient = userServiceClient;
+        this.userService = userService;
     }
 
     public Question create(UUID surveyId, QuestionCreate questionCreate) {
@@ -39,39 +36,53 @@ public class QuestionService extends AbstractCrudService<Question> {
         return super.create(question);
     }
 
-    @Override
-    public Question edit(Question resource) {
-        Question question = getById(resource.getId());
+    public Question edit(String authorizationToken, Question resource) {
+        Question question = this.getById(resource.getId(), authorizationToken);
 
-        question.setText(resource.getText());
-        question.setType(resource.getType());
-        question.setAnsweredOptionId(resource.getAnsweredOptionId());
+        Optional
+                .ofNullable(resource.getText())
+                .ifPresent(question::setText);
 
-        return super.edit(resource);
+        Optional
+                .ofNullable(resource.getType())
+                .ifPresent(question::setType);
+
+        Optional
+                .ofNullable(resource.getCorrectOptionId())
+                .ifPresent(question::setCorrectOptionId);
+
+        return super.edit(question);
     }
 
     public Question getById(UUID id, String authorizationToken) {
-        User userInfo = userServiceClient.getUserInfo(authorizationToken);
-        UUID answeredOptionId = questionAnswerService.getAnsweredOption(userInfo.getId(), id);
-
         Question question = super.getById(id);
-        question.setAnsweredOptionId(answeredOptionId);
+        Optional<User> userInfo = userService.getUserByToken(authorizationToken);
+
+        userInfo
+                .map(User::getId)
+                .flatMap(userId -> questionAnswerService.getAnsweredOption(userId, id))
+                .ifPresent(question::setAnsweredOptionId);
 
         return question;
     }
 
     @Transactional
     public void answerQuestion(String authorizationToken, UUID questionId, SurveyQuestionAnswer surveyQuestionAnswer) {
-        try {
-            User userInfo = userServiceClient.getUserInfo(authorizationToken);
+        Optional<User> user = userService.getUserByToken(authorizationToken);
 
-            UUID userId = userInfo.getId();
+        if (user.isPresent()) {
+            UUID userId = user.get().getId();
             UUID optionId = surveyQuestionAnswer.getOptionId();
 
-            questionAnswerService.create(userId, questionId, optionId);
+            try {
+                questionAnswerService.create(userId, questionId, optionId);
+            }
+            catch (RuntimeException e) {
+                throw new EntityNotProcessedException(QuestionAnswer.class);
+            }
         }
-        catch (RuntimeException e) {
-            throw new EntityNotProcessedException(QuestionAnswer.class);
+        else {
+            throw new IllegalArgumentException("User does not exist");
         }
     }
 }

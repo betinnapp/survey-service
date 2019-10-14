@@ -29,6 +29,11 @@ public class AdviceExceptionHandler extends ResponseEntityExceptionHandler {
         response.sendError(HttpStatus.NOT_MODIFIED.value());
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public void handleIllegalArgumentException(IllegalArgumentException e, HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public void handleRuntimeException(Exception e, HttpServletResponse response) throws IOException {
         LOGGER.error("Unhandled exception thrown", e);

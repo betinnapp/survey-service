@@ -27,8 +27,8 @@ public class SurveysController {
     }
 
     @GetMapping(path = "/{id}")
-    public Survey getById(@PathVariable UUID id) {
-        return surveyService.getById(id);
+    public Survey getById(@PathVariable UUID id, @RequestHeader("authorization") String authorizationToken) {
+        return surveyService.getById(id, authorizationToken);
     }
 
     @PostMapping
