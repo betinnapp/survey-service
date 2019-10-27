@@ -29,8 +29,15 @@ public class Question {
     @Column(name = "type", nullable = false, length = 40)
     private QuestionType type;
 
-    @OneToMany(mappedBy = "questionId", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @OneToMany(mappedBy = "questionId", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Option> options;
+
+    @Type(type = "pg-uuid")
+    @Column(name = "correct_option_id")
+    private UUID correctOptionId;
+
+    @Transient
+    private UUID answeredOptionId;
 
     public UUID getId() {
         return id;
@@ -66,5 +73,21 @@ public class Question {
 
     public void setSurveyId(UUID surveyId) {
         this.surveyId = surveyId;
+    }
+
+    public UUID getAnsweredOptionId() {
+        return answeredOptionId;
+    }
+
+    public void setAnsweredOptionId(UUID answeredOptionId) {
+        this.answeredOptionId = answeredOptionId;
+    }
+
+    public UUID getCorrectOptionId() {
+        return correctOptionId;
+    }
+
+    public void setCorrectOptionId(UUID correctOptionId) {
+        this.correctOptionId = correctOptionId;
     }
 }

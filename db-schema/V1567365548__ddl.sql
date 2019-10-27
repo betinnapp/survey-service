@@ -21,6 +21,7 @@ CREATE TABLE question (
     text text NOT NULL,
     type varchar(40) NOT NULL,
     survey_id uuid NOT NULL REFERENCES survey(id),
+    correct_option_id uuid NULL,
 
     PRIMARY KEY (id)
 );

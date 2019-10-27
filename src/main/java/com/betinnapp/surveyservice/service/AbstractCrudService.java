@@ -36,4 +36,9 @@ public abstract class AbstractCrudService<T> {
     public T create(T resource) {
         return crudRepository.save(resource);
     }
+
+    @Transactional
+    public T edit(T resource) {
+        return crudRepository.save(resource);
+    }
 }

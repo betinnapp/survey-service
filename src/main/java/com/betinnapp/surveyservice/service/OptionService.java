@@ -9,19 +9,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OptionService extends AbstractCrudService<Option> {
 
-    private final OptionDAO optionDAO;
-
     public OptionService(OptionDAO optionDAO) {
         super(Option.class, optionDAO);
-        this.optionDAO = optionDAO;
     }
 
-    @Transactional
     public Option create(OptionCreate optionCreate) {
         Option option = new Option();
         option.setText(optionCreate.getText());
         option.setScore(optionCreate.getScore());
+        option.setQuestionId(optionCreate.getQuestionId());
 
-        return optionDAO.save(option);
+        return super.create(option);
     }
 }

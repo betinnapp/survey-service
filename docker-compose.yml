@@ -3,7 +3,7 @@ version: '3'
 services:
 
   survey-service:
-    build: .
+    image: survey-service:0.0.1-SNAPSHOT
     restart: always
     ports:
       - "8080:8080"
