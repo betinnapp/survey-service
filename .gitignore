@@ -35,3 +35,6 @@ projectName.iml
 /build
 /local.properties
 target/
+
+# Maven release plugin
+/release.properties
