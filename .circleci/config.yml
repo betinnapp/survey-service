@@ -10,7 +10,6 @@ jobs:
       - checkout
 
       - run:
-          context: Backend
           name: Login to DockerHub
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
 
@@ -19,12 +18,14 @@ jobs:
           keys:
             - survey-service-{{ checksum "pom.xml" }}
 
+      # Switch to offline dependency resolver
       - run: mvn dependency:go-offline
 
+      # Save maven cache locally
       - save_cache:
+          key: survey-service-{{ checksum "pom.xml" }}
           paths:
             - ~/.m2
-          key: survey-service-{{ checksum "pom.xml" }}
 
       # package into a jar
       - run: mvn clean package
@@ -42,3 +43,12 @@ jobs:
       - store_artifacts:
           path: target/classes
           destination: survey-service
+
+workflows:
+  build-deploy:
+      jobs:
+        - build:
+            context: Backend
+            filters:
+              branches:
+                only: master
