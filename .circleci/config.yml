@@ -7,6 +7,10 @@ jobs:
     working_directory: ~/survey-service
 
     steps:
+      - add_ssh_keys:
+          fingerprints:
+              - "33:9b:98:4f:20:31:b3:fe:eb:4b:73:23:53:5f:b9:65"
+
       - checkout
 
       # Download and cache dependencies
