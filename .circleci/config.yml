@@ -10,6 +10,7 @@ jobs:
       - checkout
 
       - run:
+          context: Backend
           name: Login to DockerHub
           command: docker login -u $DOCKER_USER -p $DOCKER_PASS
 
