@@ -37,7 +37,7 @@ jobs:
       - run: mvn -Dmaven.deploy.skip=true release:perform
 
       # build and push docker image to docker hub
-      - run: mvn clean compile jib:build
+      - run: mvn -Djib.to.auth.username=$DOCKER_USER -Djib.to.auth.password=$DOCKER_PASS clean compile jib:build
 
       # store raw contents of src code
       - store_artifacts:
