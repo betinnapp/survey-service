@@ -115,6 +115,14 @@
 			</plugin>
 
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<tagNameFormat>@{project.version}</tagNameFormat>
+				</configuration>
+			</plugin>
+
+			<plugin>
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>jib-maven-plugin</artifactId>
 				<version>1.6.1</version>
@@ -122,7 +130,18 @@
 					<from>
 						<image>openjdk:11-jdk-slim</image>
 					</from>
+					<to>
+						<image>betinnapp/${project.artifactId}</image>
+						<tags>
+							<tag>latest</tag>
+							<tag>${project.version}</tag>
+						</tags>
+					</to>
 					<container>
+						<jvmFlags>
+							<jvmFlag>-XX:+UseSerialGC</jvmFlag>
+							<jvmFlag>-Xss512k</jvmFlag>
+						</jvmFlags>
 						<ports>
 							<port>8080</port>
 							<port>8081</port>
@@ -133,5 +152,11 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<scm>
+		<developerConnection>scm:git:git@github.com:betinnapp/survey-service.git</developerConnection>
+		<url>https://github.com/betinnapp/survey-service</url>
+		<tag>HEAD</tag>
+	</scm>
 
 </project>
