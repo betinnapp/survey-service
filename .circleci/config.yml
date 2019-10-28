@@ -9,10 +9,6 @@ jobs:
     steps:
       - checkout
 
-      - run:
-          name: Login to DockerHub
-          command: docker login -u $DOCKER_USER -p $DOCKER_PASS
-
       # Download and cache dependencies
       - restore_cache:
           keys:
