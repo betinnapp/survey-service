@@ -35,8 +35,8 @@ jobs:
 
       # Configure git
       - git:
-          - name: Configure Git
-          - command: |
+          name: Configure Git
+          command: |
               git config user.name "CI"
               git config user.email "noreply@betinnapp.com"
 
