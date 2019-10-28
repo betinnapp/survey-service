@@ -33,12 +33,11 @@ jobs:
       # prepare maven release
       - run: mvn -B -Dresume=false release:prepare
 
-      # Configure git
-      - git:
-          name: Configure Git
-          command: |
-              git config user.name "CI"
-              git config user.email "noreply@betinnapp.com"
+      # Configure git username
+      - run: git config user.name "CI"
+
+      # Configure git email
+      - run: git config user.email "noreply@betinnapp.com"
 
       # Perform release
       - run: mvn -Dmaven.deploy.skip=true release:perform
