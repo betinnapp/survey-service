@@ -12,7 +12,7 @@
 
 	<groupId>com.betinnapp</groupId>
 	<artifactId>survey-service</artifactId>
-	<version>0.0.17-SNAPSHOT</version>
+	<version>0.0.18-SNAPSHOT</version>
 
 	<name>survey-service</name>
 	<description>Demo project for Spring Boot</description>
