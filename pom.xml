@@ -157,7 +157,7 @@
 	<scm>
 		<developerConnection>scm:git:git@github.com:betinnapp/survey-service.git</developerConnection>
 		<url>https://github.com/betinnapp/survey-service</url>
-	  <tag>HEAD</tag>
-  </scm>
+	  	<tag>HEAD</tag>
+  	</scm>
 
 </project>
