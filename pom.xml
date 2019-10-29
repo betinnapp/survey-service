@@ -12,7 +12,7 @@
 
 	<groupId>com.betinnapp</groupId>
 	<artifactId>survey-service</artifactId>
-	<version>0.0.8-SNAPSHOT</version>
+	<version>0.0.8</version>
 
 	<name>survey-service</name>
 	<description>Demo project for Spring Boot</description>
@@ -156,7 +156,7 @@
 	<scm>
 		<developerConnection>scm:git:git@github.com:betinnapp/survey-service.git</developerConnection>
 		<url>https://github.com/betinnapp/survey-service</url>
-	  <tag>HEAD</tag>
+	  <tag>0.0.8</tag>
   </scm>
 
 </project>
