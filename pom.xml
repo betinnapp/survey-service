@@ -119,7 +119,7 @@
 				<configuration>
 					<goals>install</goals>
 					<tagNameFormat>@{project.version}</tagNameFormat>
-					<scmCommentPrefix>"[ci skip] "</scmCommentPrefix>
+					<scmCommentPrefix>[ci skip]</scmCommentPrefix>
 				</configuration>
 			</plugin>
 
