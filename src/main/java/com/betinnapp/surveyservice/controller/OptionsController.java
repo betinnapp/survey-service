@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/options")
 public class OptionsController {

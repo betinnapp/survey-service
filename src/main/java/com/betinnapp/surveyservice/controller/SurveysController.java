@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/surveys")
 public class SurveysController {
